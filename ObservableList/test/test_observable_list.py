@@ -14,10 +14,12 @@ import sys
 from functools import wraps
 import traceback
 
+PY2 = sys.version_info[0] == 2
+
 
 def python3(function):
     """Annotate the test to only execute it in Python 3."""
-    return pytest.mark.skipif(sys.version_info[0] == 2, reason="requires python3")(function)
+    return pytest.mark.skipif(PY2, reason="requires python3")(function)
 
 
 @fixture
@@ -419,6 +421,7 @@ ALL_METHODS = ["__init__", "__repr__", "__lt__", "__le__", "__eq__", "__gt__",
                "remove", "clear", "copy", "count", "index", "reverse", "sort",
                "extend"]
 PYTHON3_ONLY_METHODS = ["clear", "copy"]
+
 
 @pytest.mark.parametrize("method", ALL_METHODS)
 def test_methods_have_the_description_and_help(method):

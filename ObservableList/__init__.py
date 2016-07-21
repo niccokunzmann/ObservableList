@@ -270,13 +270,6 @@ class ObservableList(list):
             self._notify_remove_at(index)
             super(ObservableList, self).pop(index)
 
-    def clear(self):
-        """See list.clear."""
-        length = len(self)
-        if length:
-            self._notify_remove_at(0, length)
-        super(ObservableList, self).clear()
-
     def __delitem__(self, index_or_slice):
         """See list.__delitem__."""
         self._notify_delete(index_or_slice)
@@ -303,21 +296,28 @@ class ObservableList(list):
             self._notify_remove(slice_)
             return lambda: self._notify_add(index_or_slice)
 
+    if not PY2:
+        def clear(self):
+            """See list.clear."""
+            length = len(self)
+            if length:
+                self._notify_remove_at(0, length)
+            super(ObservableList, self).clear()
+
 #: The methods that are replaced in :class:`ObservableList`.
 REPLACED_METHODS = ["__setitem__", "__delitem__", "clear", "remove", "pop",
                     "__imul__", "insert", "append", "extend", "__iadd__",
                     "__init__"]
 
-
 for method_name in REPLACED_METHODS:
+    if not hasattr(ObservableList, method_name):
+        continue
     method = getattr(ObservableList, method_name)
     original_method = getattr(list, method_name, None)
     if original_method is not None:
         if PY2:
             method = method.im_func
         method.__doc__ = original_method.__doc__
-    else:
-        assert PY2 and method_name == "clear"
 del method, method_name
 
 __all__ = ["ObservableList", "Change", "AddChange", "RemoveChange"]
