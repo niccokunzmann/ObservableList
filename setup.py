@@ -6,11 +6,8 @@ from setuptools.command.test import test as TestCommandBase
 from distutils.core import Command
 import subprocess
 
-PACKAGE_NAME = "knittingpattern"
-PACKAGE_NAMES = [
-        "knittingpattern",
-        "knittingpattern.convert", "knittingpattern.convert.test"
-    ]
+PACKAGE_NAME = "ObservableList"
+PACKAGE_NAMES = ["ObservableList"]
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, HERE)  # for package import
@@ -46,9 +43,9 @@ METADATA = dict(
     packages=PACKAGE_NAMES,
     author=__author__,
     author_email='niccokunzmann@rambler.ru',
-    description='Python library for knitting machines.',
+    description='Python library for a list with an observer interface.',
     license='LGPL',
-    url='https://github.com/AllYarnsAreBeautiful/' + PACKAGE_NAME,
+    url='https://github.com/niccokunzmann/' + PACKAGE_NAME,
     keywords='knitting ayab fashion',
 )
 
