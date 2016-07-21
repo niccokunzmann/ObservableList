@@ -29,16 +29,12 @@ ObservableList
    :target: https://pypi.python.org/pypi/ObservableList#downloads
    :alt: Downloads from pypi   
 
-.. image:: https://readthedocs.org/projects/ObservableList/badge/?version=latest
-   :target: https://ObservableList.readthedocs.org
-   :alt: Read the Documentation
-
 .. image:: https://landscape.io/github/niccokunzmann/ObservableList/master/landscape.svg?style=flat
    :target: https://landscape.io/github/niccokunzmann/ObservableList/master
    :alt: Code Health
 
-.. image:: https://badge.waffle.io/niccokunzmann/ayab-desktop.svg?label=ready&title=issues%20ready
-   :target: https://waffle.io/niccokunzmann/ayab-desktop
+.. image:: https://badge.waffle.io/niccokunzmann/ObservableList.svg?label=ready&title=issues%20ready
+   :target: https://waffle.io/niccokunzmann/ObservableList
    :alt: Issues ready to work on
 
 For installation instructions and more, `see the documentation
