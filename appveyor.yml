@@ -25,6 +25,7 @@ environment:
 install:
   # We need wheel installed to build wheels
   - "%PYTHON%\\python.exe -m pip install wheel"
+  - "if \"%PYTHON%\" == \"C:\\Python27\" ( %PYTHON%\\python.exe -m pip install mock==2.0.0 )"
 
 build: off
 

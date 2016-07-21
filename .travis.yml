@@ -17,6 +17,7 @@ install:
 - ( cd dist ; python -m pip install ObservableList-${PACKAGE_VERSION}.zip )
 # install the test requirements
 - python -m pip install -r test-requirements.txt
+- if python -c 'import sys;exit(sys.version_info[0] == 2)' ; then python -m pip install mock==2.0.0 ; fi
 before_script:
 # remove the build folder because it creates problems for py.test
 - rm -rf build
