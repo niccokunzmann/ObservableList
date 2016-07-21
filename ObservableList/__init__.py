@@ -3,6 +3,7 @@
 This list works like a normal list but additionally observers can be registered
 that are notified, whenever the list is changed.
 """
+import sys
 
 __version__ = "0.0.1"
 
@@ -304,9 +305,14 @@ REPLACED_METHODS = ["__setitem__", "__delitem__", "clear", "remove", "pop",
                     "__imul__", "insert", "append", "extend", "__iadd__",
                     "__init__"]
 
+
 for method_name in REPLACED_METHODS:
     method = getattr(ObservableList, method_name)
-    method.__doc__ = getattr(list, method_name).__doc__
+    original_method = getattr(list, method_name, None)
+    if original_method is not None:
+        method.__doc__ = original_method.__doc__
+    else:
+        assert sys.version_info[0] == 2 and method_name == "clear"
 del method, method_name
 
 __all__ = ["ObservableList", "Change", "AddChange", "RemoveChange"]
