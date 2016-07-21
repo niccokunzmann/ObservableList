@@ -5,8 +5,8 @@ ObservableList
    :target: https://travis-ci.org/niccokunzmann/ObservableList
    :alt: Build Status
    
-.. image:: https://ci.appveyor.com/api/projects/status/c1983ovsc8thlhvi?svg=true
-   :target: https://ci.appveyor.com/project/niccokunzmann/ObservableList
+.. image:: https://ci.appveyor.com/api/projects/status/3fwlnw09pme0g7k0?svg=true
+   :target: https://ci.appveyor.com/project/AllYarnsAreBeautiful/observablelist
    :alt: AppVeyor CI build status (Windows)
    
 .. image:: https://codeclimate.com/github/niccokunzmann/ObservableList/badges/gpa.svg
