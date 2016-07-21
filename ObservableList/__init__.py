@@ -156,6 +156,7 @@ class ObservableList(list):
     See the `Observer Pattern
     <https://en.wikipedia.org/wiki/Observer_pattern>`__ for more understanding.
 
+    The methods "clear" and "copy" are not available in Python 2.
     """
 
     def __init__(self, iterable=()):
