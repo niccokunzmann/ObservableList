@@ -15,6 +15,11 @@ from functools import wraps
 import traceback
 
 
+def python3(function):
+    """Annotate the test to only execute it in Python 3."""
+    return pytest.mark.skipif(sys.version_info[0] == 2, reason="requires python3")(function)
+
+
 @fixture
 def changes():
     """A list of changes made."""
@@ -331,6 +336,7 @@ class TestRemoveElements:
         chain.remove(10).assert_remove(10, [10])
         chain.remove(10).assert_no_change()
 
+    @python3
     def test_clear(self, chain):
         chain.clear().assert_no_change()
         chain.extend([1, 2, 3, 4])
@@ -374,6 +380,7 @@ CONVERSIONS = ["__repr__", "__len__"]
 
 class TestNoChanges:
 
+    @python3
     def test_copy(self, chain):
         chain.copy().assert_no_change()
         chain.extend([2, 3, 657, 8])
@@ -411,10 +418,12 @@ ALL_METHODS = ["__init__", "__repr__", "__lt__", "__le__", "__eq__", "__gt__",
                "__mul__", "__rmul__", "__imul__", "append", "insert", "pop",
                "remove", "clear", "copy", "count", "index", "reverse", "sort",
                "extend"]
-
+PYTHON3_ONLY_METHODS = ["clear", "copy"]
 
 @pytest.mark.parametrize("method", ALL_METHODS)
 def test_methods_have_the_description_and_help(method):
+    if method in PYTHON3_ONLY_METHODS:
+        pytest.skip("Python 3 is required for method {}".format(method))
     real = getattr(list, method)
     observable = getattr(ObservableList, method)
     assert real.__doc__ == observable.__doc__

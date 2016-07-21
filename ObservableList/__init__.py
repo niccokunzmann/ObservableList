@@ -5,6 +5,7 @@ that are notified, whenever the list is changed.
 """
 import sys
 
+PY2 = sys.version_info[0] == 2
 __version__ = "0.0.1"
 
 
@@ -204,12 +205,12 @@ class ObservableList(list):
 
     def append(self, element):
         """See list.append."""
-        super().append(element)
+        super(ObservableList, self).append(element)
         self._notify_add_at(len(self) - 1)
 
     def insert(self, index, item):
         """See list.insert."""
-        super().insert(index, item)
+        super(ObservableList, self).insert(index, item)
         length = len(self)
         if index >= length:
             index = length - 1
@@ -224,7 +225,7 @@ class ObservableList(list):
         index = len(self)
         length = 0
         for length, element in enumerate(other, 1):
-            super().append(element)
+            super(ObservableList, self).append(element)
         if length:
             self._notify_add_at(index, length)
 
@@ -236,13 +237,13 @@ class ObservableList(list):
     def __imul__(self, multiplier):
         """See list.__imul__."""
         if not isinstance(multiplier, int):
-            return super().__imul__(multiplier)
+            return super(ObservableList, self).__imul__(multiplier)
         length = len(self)
         if not length or multiplier == 1:
             return self
         if multiplier <= 0:
             self._notify_remove_at(0, length)
-        super().__imul__(multiplier)
+        super(ObservableList, self).__imul__(multiplier)
         new_length = len(self)
         if new_length:
             self._notify_add(slice(length, new_length))
@@ -251,11 +252,13 @@ class ObservableList(list):
     def pop(self, index=-1):
         """See list.pop."""
         if not isinstance(index, int):
+            if PY2:
+                raise TypeError('an integer is required')
             raise TypeError("'str' object cannot be interpreted as an integer")
         length = len(self)
         if -length <= index < length:
             self._notify_remove_at(index)
-        return super().pop(index)
+        return super(ObservableList, self).pop(index)
 
     def remove(self, element):
         """See list.remove."""
@@ -265,24 +268,24 @@ class ObservableList(list):
             raise ValueError("list.remove(x): x not in list")
         else:
             self._notify_remove_at(index)
-            super().pop(index)
+            super(ObservableList, self).pop(index)
 
     def clear(self):
         """See list.clear."""
         length = len(self)
         if length:
             self._notify_remove_at(0, length)
-        super().clear()
+        super(ObservableList, self).clear()
 
     def __delitem__(self, index_or_slice):
         """See list.__delitem__."""
         self._notify_delete(index_or_slice)
-        super().__delitem__(index_or_slice)
+        super(ObservableList, self).__delitem__(index_or_slice)
 
     def __setitem__(self, index_or_slice, value):
         """See list.__setitem__."""
         notify_add = self._notify_delete(index_or_slice)
-        super().__setitem__(index_or_slice, value)
+        super(ObservableList, self).__setitem__(index_or_slice, value)
         notify_add()
 
     def _notify_delete(self, index_or_slice):
@@ -310,9 +313,11 @@ for method_name in REPLACED_METHODS:
     method = getattr(ObservableList, method_name)
     original_method = getattr(list, method_name, None)
     if original_method is not None:
+        if PY2:
+            method = method.im_func
         method.__doc__ = original_method.__doc__
     else:
-        assert sys.version_info[0] == 2 and method_name == "clear"
+        assert PY2 and method_name == "clear"
 del method, method_name
 
 __all__ = ["ObservableList", "Change", "AddChange", "RemoveChange"]
