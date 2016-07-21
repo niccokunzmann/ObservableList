@@ -298,14 +298,14 @@ class TestAddElements:
 
     def test_imul(self, filled_chain):
         filled_chain.__imul__(3).assert_add(4, [1, 2, 3, 4, 1, 2, 3, 4])
-        filled_chain.__imul__("asd").assert_no_change()
-        filled_chain.__imul__(1).assert_no_change()
 
-    def test_imul_is_empty(self, chain):
-        chain.__imul__(10).assert_no_change()
-        chain.__imul__(-10).assert_no_change()
-        chain.__imul__(0).assert_no_change()
-        chain.__imul__(1).assert_no_change()
+    @pytest.mark.parametrize("argument", ["asd", 1])
+    def test_no_change_for_some_arguments(self, filled_chain, argument):
+        filled_chain.__imul__(argument).assert_no_change()
+
+    @pytest.mark.parametrize("multiplier", [10, -10, 0, 1])
+    def test_imul_is_empty(self, chain, multiplier):
+        chain.__imul__(multiplier).assert_no_change()
 
     @pytest.mark.parametrize("multiplier", [0, -3])
     def test_imul_deletes(self, filled_chain, multiplier):
@@ -321,11 +321,9 @@ class TestRemoveElements:
     def test_pop_with_positive_index(self, filled_chain):
         filled_chain.pop(1).assert_remove(1, [2])
 
-    def test_pop_invalid_argument(self, filled_chain):
-        filled_chain.pop(-22).assert_no_change()
-        filled_chain.pop(22).assert_no_change()
-        filled_chain.pop(-6).assert_no_change()
-        filled_chain.pop(6).assert_no_change()
+    @pytest.mark.parametrize("multiplier", [-22, 22, -6, 6])
+    def test_pop_invalid_argument(self, filled_chain, multiplier):
+        filled_chain.pop(multiplier).assert_no_change()
 
     def test_pop_from_empty_list(self, chain):
         chain.pop().assert_no_change()
@@ -348,10 +346,9 @@ class TestRemoveElements:
 
 class TestItemMethods:
 
-    def test_delete_fails(self, filled_chain):
-        filled_chain.__delitem__(4).assert_no_change()
-        filled_chain.__delitem__(-5).assert_no_change()
-        filled_chain.__delitem__("123").assert_no_change()
+    @pytest.mark.parametrize("argument", [4, -5, "123"])
+    def test_delete_fails(self, filled_chain, argument):
+        filled_chain.__delitem__(argument).assert_no_change()
 
     def test_delete_positive_index_inside(self, filled_chain):
         filled_chain.__delitem__(1).assert_remove(1, [2])
