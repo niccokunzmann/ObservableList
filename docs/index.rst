@@ -13,7 +13,7 @@ Contents:
 
    Installation
    DevelopmentSetup
-   reference/index
+   reference/ObservableList/index
 
 
 Indices and tables

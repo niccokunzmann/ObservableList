@@ -3,5 +3,5 @@
 import sys
 import os
 
-HERE = os.dirname(__file__)
-sys.path.append(os.path.join(HERE, ".."))
+HERE = os.path.dirname(__file__)
+sys.path.append(os.path.join(HERE, "..", ".."))

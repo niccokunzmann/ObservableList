@@ -7,7 +7,7 @@ This way, a row can be notifies abot the change in its instructions.
 
 from pytest import fixture
 import pytest
-from unittest import MagicMock
+from unittest.mock import MagicMock
 from ObservableList import ObservableList
 from weakref import WeakKeyDictionary
 import sys

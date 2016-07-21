@@ -8,7 +8,7 @@ def absjoin(*args):
     """
     return os.path.abspath(os.path.join(*args))
 
-PACKAGE = "knittingpattern"
+PACKAGE = "ObservableList"
 
 HERE = absjoin(os.path.dirname(__file__))
 DOCS_DIRECTORY = absjoin(HERE, "..")
