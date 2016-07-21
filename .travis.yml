@@ -12,7 +12,7 @@ install:
 - TAG_NAME=v$PACKAGE_VERSION
 # install from the zip file to see if files were forgotten
 - python3 setup.py sdist --dist-dir=dist --formats=zip
-- ( cd dist ; python3 -m pip install knittingpattern-${PACKAGE_VERSION}.zip )
+- ( cd dist ; python3 -m pip install ObservableList-${PACKAGE_VERSION}.zip )
 # install the test requirements
 - python3 -m pip install -r test-requirements.txt
 before_script:
@@ -26,11 +26,11 @@ before_script:
 script:
 # test with pep8
 # add coverage for python 3.3 and above
-- py.test --cov=knittingpattern --pep8
+- py.test --cov=ObservableList --pep8
 # test import form everywhere
-- ( cd / && python3 -c "import knittingpattern;print(\"imported\")" )
+- ( cd / && python3 -c "import ObservableList;print(\"imported\")" )
 # run tests from installation
-- "( cd / && py.test --pyargs knittingpattern )"
+- "( cd / && py.test --pyargs ObservableList )"
 # test that the tag represents the version
 # https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables
 - ( if [ -n "$TRAVIS_TAG" ]; then if [ $TAG_NAME != $TRAVIS_TAG ]; then echo "This tag is for the wrong version. Got \"$TRAVIS_TAG\" expected \"$TAG_NAME\"."; exit 1; fi; fi; )
@@ -51,5 +51,5 @@ deploy:
     secure: nqxnwagFphdLLJsjt4of/jMnLtsMtk8HqoPmENodEfaeue0A4ziIIm46tSBKdBqHURxuCFjj8siuaVCsXiZso/b4aJaIy08C3dcYltiLTfnYDJisicijEMg2wLNffJqiTN2+W6trHFJ7TzYz932jQEMmOC09mynt7LbP7RJOfqOGxvHiVL8D7I677xNLz+Kgu5R5FfZ9lzWcuBEbFTLffFcITeqVM+0yGJv9pZ+rud3RXl3qCAFYsG7SlHnzGuOyV/vWdAmfEuCvW+bs3oFS85Im4LiD1YTE5CQZhrwwGslncjOlWOAlrMuJzWmAG/6OTrIK7nIpI5gVlZdkesZQsx6JeR/22rVjkD9UcKj1R+7lzsC2X9Lh+vMRtxHJnDlW7clUA9+qw+TnvmR85UUhnmaaGtGJwZXDi0TP9wYmg3TaxoKKx5SnYDyFIq5kbVnSxSu1ng0qFMszGH1HYR350fEk8/so3IxdAbrHYbK5xeMv0vISJXdzIv/0U14lb4uB3agWf+SANQkrjYNx4BSE5zP1qj2HC2NsGwXdkl/8HjbTFe9Daj5nLTmGRL80GQ0BpRyJrT5wERRqozuWM1Jb1v6kgADhZhWAUryFlTZ+875He1CYXXoVSI59IER1ccK89NautsrF3mW/4o/WXCTzPDHtDkdavAvVPJc34oTmZgI=
   on:
     tags: true
-    distributions: sdist bdist_wininst bdist_wheel
-    repo: AllYarnsAreBeautiful/knittingpattern
+    distributions: sdist bdist_wheel
+    repo: niccokunzmann/ObservableList
