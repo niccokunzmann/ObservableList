@@ -37,6 +37,10 @@ ObservableList
    :target: https://landscape.io/github/niccokunzmann/ObservableList/master
    :alt: Code Health
 
+.. image:: https://readthedocs.org/projects/observablelist/badge/?version=latest
+   :target: http://observablelist.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
+
 .. image:: https://badge.waffle.io/niccokunzmann/ObservableList.svg?label=ready&title=issues%20ready
    :target: https://waffle.io/niccokunzmann/ObservableList
    :alt: Issues ready to work on
