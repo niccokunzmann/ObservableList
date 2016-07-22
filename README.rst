@@ -1,6 +1,10 @@
 ObservableList
 ===============
 
+.. image:: https://readthedocs.org/projects/observablelist/badge/?version=latest
+   :target: http://observablelist.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
+
 .. image:: https://travis-ci.org/niccokunzmann/ObservableList.svg
    :target: https://travis-ci.org/niccokunzmann/ObservableList
    :alt: Build Status
