@@ -15,11 +15,11 @@ install:
 - TAG_NAME=v$PACKAGE_VERSION
 # install from the zip file to see if files were forgotten
 - python setup.py sdist --dist-dir=dist --formats=zip
-- ( cd dist ; python -m pip install ObservableList-${PACKAGE_VERSION}.zip )
+- ( cd dist ; pip install ObservableList-${PACKAGE_VERSION}.zip )
 # install the test requirements
-- python -m pip install -r test-requirements.txt
+- pip install -r test-requirements.txt
 - IS_PYTHON2="`python -c 'import sys;print(sys.version_info[0] == 2)'`"
-- if ! python -c "import unittest.mock" 2> /dev/null ; then python -m pip install mock==2.0.0 ; fi
+- if ! python -c "import unittest.mock" 2> /dev/null ; then pip install mock==2.0.0 ; fi
 before_script:
 # remove the build folder because it creates problems for py.test
 - rm -rf build
@@ -46,6 +46,7 @@ after_script:
 before_deploy:
 # create the documentation
 - ( cd docs ; make html )
+- pip install wheel
 deploy:
 # created with travis command line tool
 # https://docs.travis-ci.com/user/deployment/pypi
