@@ -14,7 +14,7 @@ python:
 - '3.5'
 - '3.6'
 before_install:
-- python --version
+- pip install --upgrade pip
 install:
 # install the package
 - PACKAGE_VERSION=`python setup.py --version`
