@@ -32,7 +32,7 @@ before_script:
 script:
 # test with pep8
 # add coverage for python 3.3 and above
-- if [ "$IS_PYTHON26" == "False" ] ; then py.test --cov=ObservableList --pep8 fi
+- if [ "$IS_PYTHON26" == "False" ] ; then py.test --cov=ObservableList --pep8 ; fi
 # run tests from installation and test import form everywhere
 - "( cd / && py.test --pyargs ObservableList )"
 # test that the tag represents the version
