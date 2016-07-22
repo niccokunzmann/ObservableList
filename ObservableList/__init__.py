@@ -6,7 +6,7 @@ that are notified, whenever the list is changed.
 import sys
 
 PY2 = sys.version_info[0] == 2
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 
 class Change(object):
