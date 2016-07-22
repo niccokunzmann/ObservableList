@@ -19,6 +19,7 @@ install:
 # install the test requirements
 - pip install -r test-requirements.txt
 - IS_PYTHON2="`python -c 'import sys;print(sys.version_info[0] == 2)'`"
+- IS_PYTHON26="`python -c 'import sys;print(sys.version_info[:2] == (2, 6))'`"
 - if ! python -c "import unittest.mock" 2> /dev/null ; then pip install mock==2.0.0 ; fi
 before_script:
 # remove the build folder because it creates problems for py.test
@@ -31,10 +32,8 @@ before_script:
 script:
 # test with pep8
 # add coverage for python 3.3 and above
-- py.test --cov=ObservableList --pep8
-# test import form everywhere
-- ( cd / && python -c "import ObservableList;print(\"imported\")" )
-# run tests from installation
+- if [ "$IS_PYTHON26" == "False" ] ; then py.test --cov=ObservableList --pep8 fi
+# run tests from installation and test import form everywhere
 - "( cd / && py.test --pyargs ObservableList )"
 # test that the tag represents the version
 # https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables
@@ -42,7 +41,7 @@ script:
 after_script:
 # https://github.com/codeclimate/python-test-reporter
 # set the environment variable CODECLIMATE_REPO_TOKEN in travis-ci settings
-- if "$IS_PYTHON2" == "False" ; then codeclimate-test-reporter ; fi
+- if [ "$IS_PYTHON2" == "False" ] ; then codeclimate-test-reporter ; fi
 before_deploy:
 # create the documentation
 - ( cd docs ; make html )
