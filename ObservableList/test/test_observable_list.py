@@ -422,7 +422,7 @@ PYTHON3_ONLY_METHODS = ["clear", "copy"]
 
 @pytest.mark.parametrize("method", ALL_METHODS)
 def test_methods_have_the_description_and_help(method):
-    if method in PYTHON3_ONLY_METHODS:
+    if PY2 and method in PYTHON3_ONLY_METHODS:
         pytest.skip("Python 3 is required for method {}".format(method))
     real = getattr(list, method)
     observable = getattr(ObservableList, method)
