@@ -109,14 +109,13 @@ class Change(object):
 
     def __repr__(self):
         """The change as string."""
-        step = ":{}".format(self.step) if self.step != 1 else ""
-        return "<{} {}[{}:{}{}]>".format(
+        step = ":{0}".format(self.step) if self.step != 1 else ""
+        return "<{0} {1}[{2}:{3}{4}]>".format(
             self.__class__.__name__,
             self.changed_object,
             self.start,
             self.stop,
-            step
-            )
+            step)
 
     def items(self):
         """Return an iterable over pairs of index and value."""

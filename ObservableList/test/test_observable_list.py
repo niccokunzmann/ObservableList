@@ -113,6 +113,11 @@ class StepTester(object):
         self.changes_before, self.changes_after = changes
         self.assert_same()
 
+    @property
+    def last_change(self):
+        """The last change."""
+        return self.changes_after[-1][0]
+
     def assert_same(self):
         assert self.real_before == self.observable_before, PRECONDITION
         assert self.real == self.observable
@@ -432,3 +437,12 @@ def test_methods_have_the_description_and_help(method):
 def test_initialize_with_list():
     items = (1, 2, 3)
     assert ObservableList(items) == list(items)
+
+
+@pytest.mark.parametrize("method", ["remove", "append"])
+def test_change_to_string(filled_chain, method):
+    change = filled_chain.call(method)(3).last_change
+    string = str(change)
+    assert string.startswith("<")
+    assert string.endswith(">")
+    assert "Change" in string
