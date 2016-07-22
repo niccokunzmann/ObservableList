@@ -2,10 +2,17 @@ language: python
 sudo: required
 python:
 #- "3.2" # C:\python32\lib\site-packages\pkg_resources\__init__.py:80: UserWarning: Support for Python 3.0-3.2 has been dropped. Future versions will fail here.
+- '2.3'
+- '2.4'
+- '2.5'
+- '2.6'
 - '2.7'
+- '3.1'
+- '3.2'
 - '3.3'
 - '3.4'
 - '3.5'
+- '3.6'
 before_install:
 - python --version
 install:
@@ -17,7 +24,8 @@ install:
 - ( cd dist ; python -m pip install ObservableList-${PACKAGE_VERSION}.zip )
 # install the test requirements
 - python -m pip install -r test-requirements.txt
-- if python -c 'import sys;exit(sys.version_info[0] == 2)' ; then python -m pip install mock==2.0.0 ; fi
+- IS_PYTHON2="`python -c 'import sys;print(sys.version_info[0] == 2)'`"
+- if ! python -c "import unittest.mock" 2> /dev/null ; then python -m pip install mock==2.0.0 ; fi
 before_script:
 # remove the build folder because it creates problems for py.test
 - rm -rf build
@@ -40,7 +48,7 @@ script:
 after_script:
 # https://github.com/codeclimate/python-test-reporter
 # set the environment variable CODECLIMATE_REPO_TOKEN in travis-ci settings
-- codeclimate-test-reporter
+- if "$IS_PYTHON2" == "False" ; then codeclimate-test-reporter ; fi
 before_deploy:
 # create the documentation
 - ( cd docs ; make html )
